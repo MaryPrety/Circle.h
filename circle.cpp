@@ -1,4 +1,4 @@
-﻿#include "circle.h"
+#include "circle.h"
 #include <cmath>
 
 
@@ -31,16 +31,26 @@ float circle::sqaure(float a, float b, float c)
 
 bool circle::triangle_around(float a, float b, float c)
 {
-	if (a + b > c && a + c > b && b + c > a) return true;
+	if ((a + b > c) && (b + c > a) && (a + c > b)) {
+		float p = (a + b + c) / 2;
+		float rradius = sqrt(((p - a) * (p - b) * (p - c)) / p);
+
+		if (radius == rradius) return true;
+		else return false;
+	}
 	else return false;
 }
 
 
 bool circle::triangle_in(float a, float b, float c)
 {
-	float s = sqaure(a, b, c);
-	float calc_r = 2 * s / (a + b + c);
-	if (calc_r <= this->radius) return true;
+	if ((a + b > c) && (b + c > a) && (a + c > b)) {
+		float s = sqaure(a, b, c);
+		float calc_r = (a * b * c) / (4 * s);
+
+		if (calc_r <= this->radius) return true;
+		else return false;
+	}
 	else return false;
 }
 
